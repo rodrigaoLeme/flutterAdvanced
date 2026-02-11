@@ -25,27 +25,14 @@ class NextEventPlayer {
   }
 }
 
+// SUT = System Under Test ou OUT = Object Under Test
+
 void main() {
+  NextEventPlayer makeSut(String name) =>
+      NextEventPlayer(id: '', name: name, isConfirmed: true);
   test('should return the first letter of the first and last names', () {
-    const player = NextEventPlayer(
-      id: '',
-      name: 'Rodrigo Leme',
-      isConfirmed: true,
-    );
-    expect(player.getInitials(), 'RL');
-
-    const player2 = NextEventPlayer(
-      id: '',
-      name: 'Pedro Carvalho',
-      isConfirmed: true,
-    );
-    expect(player2.getInitials(), 'PC');
-
-    const player3 = NextEventPlayer(
-      id: '',
-      name: 'Ingrid Mota da Silva',
-      isConfirmed: true,
-    );
-    expect(player3.getInitials(), 'IS');
+    expect(makeSut('Rodrigo Leme').getInitials(), 'RL');
+    expect(makeSut('Pedro Carvalho').getInitials(), 'PC');
+    expect(makeSut('Ingrid Mota da Silva').getInitials(), 'IS');
   });
 }
