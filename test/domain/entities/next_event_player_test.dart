@@ -10,37 +10,36 @@ class NextEventPlayer {
   final bool isConfirmed;
   final DateTime? confirmationDate;
 
-  const NextEventPlayer({
+  const NextEventPlayer._({
     required this.id,
     required this.name,
     required this.isConfirmed,
-    this.initals = '',
+    required this.initals,
     this.photo,
     this.position,
     this.confirmationDate,
   });
 
-  NextEventPlayer copyWith({
-    String? id,
-    String? name,
-    String? initals,
+  factory NextEventPlayer.fromName({
+    required String id,
+    required String name,
+    required bool isConfirmed,
     String? photo,
     String? position,
-    bool? isConfirmed,
     DateTime? confirmationDate,
   }) {
-    return NextEventPlayer(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      initals: initals ?? _getInitials(),
-      photo: photo ?? this.photo,
-      position: position ?? this.position,
-      isConfirmed: isConfirmed ?? this.isConfirmed,
-      confirmationDate: confirmationDate ?? this.confirmationDate,
+    return NextEventPlayer._(
+      id: id,
+      name: name,
+      initals: _getInitials(name),
+      isConfirmed: isConfirmed,
+      photo: photo,
+      position: position,
+      confirmationDate: confirmationDate,
     );
   }
 
-  String _getInitials() {
+  static String _getInitials(String name) {
     final names = name.split(' ');
     final firstChar = names.first[0];
     final lastChar = names.last[0];
@@ -52,7 +51,7 @@ class NextEventPlayer {
 
 void main() {
   String initialsOf(String name) =>
-      NextEventPlayer(id: '', name: name, isConfirmed: true).copyWith().initals;
+      NextEventPlayer.fromName(id: '', name: name, isConfirmed: true).initals;
   test('should return the first letter of the first and last names', () {
     expect(initialsOf('Rodrigo Leme'), 'RL');
     expect(initialsOf('Pedro Carvalho'), 'PC');
