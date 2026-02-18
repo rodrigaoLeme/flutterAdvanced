@@ -40,9 +40,21 @@ class NextEventPlayer {
   }
 
   static String _getInitials(String name) {
+    late final String firstChar;
+    late final String lastChar;
+
     final names = name.toUpperCase().split(' ');
-    final firstChar = names.first[0];
-    final lastChar = names.last[names.length == 1 ? 1 : 0];
+
+    if (names.first == '') {
+      firstChar = '-';
+      lastChar = '';
+    } else if (names.length == 1) {
+      firstChar = names.first[0];
+      lastChar = (names.first.split('').length > 1) ? names.first[1] : '';
+    } else {
+      firstChar = names.first[0];
+      lastChar = names.last[0];
+    }
     return '$firstChar$lastChar';
   }
 }
@@ -60,10 +72,16 @@ void main() {
 
   test('should return the first letters name', () {
     expect(initialsOf('Rodrigo'), 'RO');
+    expect(initialsOf('R'), 'R');
   });
 
   test('should convert to uppercase', () {
     expect(initialsOf('rodrigo leme'), 'RL');
     expect(initialsOf('rodrigo'), 'RO');
+    expect(initialsOf('r'), 'R');
+  });
+
+  test('should retun with no name', () {
+    expect(initialsOf(''), '-');
   });
 }
