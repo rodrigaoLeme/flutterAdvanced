@@ -43,7 +43,7 @@ class NextEventPlayer {
     late final String firstChar;
     late final String lastChar;
 
-    final names = name.toUpperCase().split(' ');
+    final names = name.toUpperCase().trim().split(' ');
 
     if (names.first == '') {
       firstChar = '-';
@@ -83,5 +83,14 @@ void main() {
 
   test('should retun with no name', () {
     expect(initialsOf(''), '-');
+  });
+
+  test('should ignore extra whitespaces', () {
+    expect(initialsOf('Rodrigo Leme '), 'RL');
+    expect(initialsOf('Rodrigo  Leme '), 'RL');
+    expect(initialsOf('  Rodrigo  Leme '), 'RL');
+    expect(initialsOf(' rodrigo '), 'RO');
+    expect(initialsOf(' r '), 'R');
+    expect(initialsOf('  '), '-');
   });
 }
