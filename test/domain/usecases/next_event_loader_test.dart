@@ -3,19 +3,8 @@ import 'dart:math';
 import 'package:flutter_advanced/domain/entities/next_event.dart';
 import 'package:flutter_advanced/domain/entities/next_event_player.dart';
 import 'package:flutter_advanced/domain/repositories/load_next_event_repository.dart';
+import 'package:flutter_advanced/domain/usecases/next_event_loader.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-class NextEventLoader {
-  final LoadNextEventRepository repo;
-
-  NextEventLoader({
-    required this.repo,
-  });
-
-  Future<NextEvent> call({required String groupId}) async {
-    return repo.loadNextEvent(groupId: groupId);
-  }
-}
 
 class LoadNextEventSpyRepository implements LoadNextEventRepository {
   String? groupId;
