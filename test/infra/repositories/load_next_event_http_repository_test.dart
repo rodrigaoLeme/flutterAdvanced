@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'dart:typed_data';
 
+import 'package:flutter_advanced/domain/entities/domain_error.dart';
 import 'package:flutter_advanced/domain/entities/next_event.dart';
 import 'package:flutter_advanced/domain/entities/next_event_player.dart';
 import 'package:flutter_advanced/domain/repositories/load_next_event_repository.dart';
@@ -9,11 +9,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 
 import '../../helpers/fakes.dart';
-
-enum DomainError {
-  unexpected,
-  sessionExpired;
-}
 
 class LoadNextEventHttpRepository implements LoadNextEventRepository {
   final Client httpClient;
