@@ -6,7 +6,7 @@ import 'package:flutter_advanced/infra/api/repositories/load_next_event_http_rep
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 
-import '../../helpers/fakes.dart';
+import '../../../helpers/fakes.dart';
 
 class HttpClientSpy implements Client {
   String? method;
