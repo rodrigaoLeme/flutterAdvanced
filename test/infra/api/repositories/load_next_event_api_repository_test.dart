@@ -13,26 +13,33 @@ class LoadNextEventApiRepository implements LoadNextEventRepository {
 
   @override
   Future<NextEvent> loadNextEvent({required String groupId}) async {
-    final event = await httpClient.get(url: url, params: {"groupId": groupId});
+    final json = await httpClient.get(url: url, params: {"groupId": groupId});
 
-    return NextEvent(
-      groupName: event['groupName'],
-      date: DateTime.parse(event['date']),
-      players: event['players']
-          .map<NextEventPlayer>(
-            (player) => NextEventPlayer.fromName(
-              id: player['id'],
-              name: player['name'],
-              position: player['position'],
-              photo: player['photo'],
-              confirmationDate:
-                  DateTime.tryParse(player['confirmationDate'] ?? ''),
-              isConfirmed: player['isConfirmed'],
-            ),
-          )
-          .toList(),
-    );
+    return NextEventMapper.toObject(json);
   }
+}
+
+class NextEventMapper {
+  static NextEvent toObject(Map<String, dynamic> json) => NextEvent(
+      groupName: json['groupName'],
+      date: DateTime.parse(json['date']),
+      players: NextEventPlayerMapper.toList(json['players']));
+}
+
+class NextEventPlayerMapper {
+  static List<NextEventPlayer> toList(List<Map<String, dynamic>> arr) => arr
+      .map<NextEventPlayer>((player) => NextEventPlayerMapper.toObject(player))
+      .toList();
+
+  static NextEventPlayer toObject(Map<String, dynamic> json) =>
+      NextEventPlayer.fromName(
+        id: json['id'],
+        name: json['name'],
+        position: json['position'],
+        photo: json['photo'],
+        confirmationDate: DateTime.tryParse(json['confirmationDate'] ?? ''),
+        isConfirmed: json['isConfirmed'],
+      );
 }
 
 abstract class HttpGetClient {
